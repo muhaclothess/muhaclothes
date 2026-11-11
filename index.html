@@ -10,7 +10,7 @@
 header{height:78px;padding:0 7%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);position:sticky;top:0;background:#0b0b0bf2;z-index:5}.logo{font-weight:800;letter-spacing:3px;font-size:22px}nav{display:flex;gap:26px;color:#aaa;font-size:12px}
 .hero{min-height:560px;padding:100px 8%;display:flex;flex-direction:column;justify-content:center;background:radial-gradient(ellipse at 76% 46%,#3b342b 0,#191714 34%,#0b0b0b 72%)}.eyebrow{font-size:11px;letter-spacing:4px;color:#b7a58a;text-transform:uppercase}.hero h1{font-size:clamp(58px,10vw,112px);line-height:.9;letter-spacing:-5px;margin:24px 0}.hero p{max-width:460px;color:#aaa;line-height:1.8;font-size:14px}.btn{display:inline-block;border:0;background:var(--cream);color:#111;padding:16px 25px;font-weight:800;font-size:11px;letter-spacing:1px;cursor:pointer;margin-top:24px}
 section{padding:78px 8%}.heading{font-size:34px;margin:0 0 10px}.sub{font-size:13px;color:#888;margin:0 0 35px}
-.products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}.product{background:var(--panel);padding-bottom:22px}.photo{height:340px;background:linear-gradient(145deg,#292722,#111);display:flex;align-items:center;justify-content:center;color:#777;font-size:11px;letter-spacing:2px;overflow:hidden}.photo img{width:100%;height:100%;object-fit:cover}.info{padding:20px}.name{font-weight:700;font-size:17px}.meta{font-size:12px;color:#999;margin-top:8px}.price{font-size:18px;font-weight:800;margin-top:16px}.orderlink{display:inline-block;margin-top:18px;padding-bottom:5px;border-bottom:1px solid #b7a58a;font-size:11px;letter-spacing:1px}
+.products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}.product{display:block;background:var(--panel);padding-bottom:22px;transition:transform .2s,background .2s}.product[href]:hover{transform:translateY(-4px);background:#1b1b1b}.photo{height:340px;background:linear-gradient(145deg,#292722,#111);display:flex;align-items:center;justify-content:center;color:#777;font-size:11px;letter-spacing:2px;overflow:hidden}.photo img{width:100%;height:100%;object-fit:cover}.info{padding:20px}.name{font-weight:700;font-size:17px}.meta{font-size:12px;color:#999;margin-top:8px}.price{font-size:18px;font-weight:800;margin-top:16px}.orderlink{display:inline-block;margin-top:18px;padding-bottom:5px;border-bottom:1px solid #b7a58a;font-size:11px;letter-spacing:1px}
 .about{background:#141414;display:grid;grid-template-columns:1fr 1fr;gap:45px;align-items:center}.about p{font-size:14px;line-height:2;color:#aaa}.sources{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}.sources span{border:1px solid #333;padding:9px 13px;color:#aaa;font-size:11px}
 .order{background:#101010}.formwrap{max-width:650px;margin:auto}form{display:grid;gap:15px}label{font-size:12px;color:#aaa}input,select,textarea{width:100%;margin-top:8px;padding:15px;background:#1b1b1b;border:1px solid #333;color:#fff;font:inherit;font-size:13px}textarea{min-height:85px}form button{width:100%}.hint{font-size:11px;line-height:1.7;color:#777;margin-top:16px}
 footer{padding:30px 8%;border-top:1px solid #292929;display:flex;justify-content:space-between;color:#777;font-size:12px}
@@ -22,13 +22,12 @@ footer{padding:30px 8%;border-top:1px solid #292929;display:flex;justify-content
 <section class="hero"><div class="eyebrow">YOUR STYLE. YOUR RULES.</div><h1>MUHA<br>CLOTHES.</h1><p>Одежда, которая говорит за тебя. Находи вещи с характером и создавай собственный стиль.</p><a class="btn" href="#catalog">СМОТРЕТЬ КАТАЛОГ</a></section>
 <section id="catalog"><h2 class="heading">Каталог</h2><p class="sub">Актуальные позиции MUHACLOTHES</p><div class="products" id="products"><p style="color:#888">Загружаем каталог…</p></div></section>
 <section class="about" id="about"><div><div class="eyebrow">ABOUT US</div><h2 class="heading" style="margin-top:18px">Больше, чем просто одежда.</h2></div><div><p>MUHACLOTHES — магазин одежды с акцентом на стиль, детали и индивидуальность. Мы ищем интересные вещи на разных площадках и помогаем найти то, что подходит именно тебе.</p><div class="sources"><span>GOOFISH</span><span>POIZON</span><span>TAOBAO</span><span>1688</span><span>EBAY</span></div></div></section>
-<section class="order" id="order"><div class="formwrap"><div class="eyebrow">MAKE AN ORDER</div><h2 class="heading" style="margin-top:15px">Оформить заявку</h2><p class="sub">Заполни форму — подготовим сообщение в Telegram.</p>
+<section class="order" id="order"><div class="formwrap"><div class="eyebrow">CUSTOM ORDER</div><h2 class="heading" style="margin-top:15px">Заказать с другой площадки</h2><p class="sub">Не нашёл нужную вещь в каталоге? Пришли ссылку на товар с Poizon, Taobao, 1688, eBay или другой площадки.</p>
 <form id="orderForm">
 <label>Твоё имя<input id="customerName" required maxlength="80" placeholder="Как к тебе обращаться?"></label>
 <label>Номер телефона<input id="customerPhone" required type="tel" maxlength="30" placeholder="+7 900 000-00-00"></label>
-<label>Товар<select id="productChoice" required><option value="">Выбери товар</option></select></label>
-<label>Ссылка на товар<input id="productLink" type="url" placeholder="https://..."></label>
-<label>Комментарий<textarea id="comment" maxlength="1000" placeholder="Размер, цвет и пожелания"></textarea></label>
+<label>Ссылка на товар<input id="productLink" type="url" required placeholder="https://..."></label>
+<label>Комментарий<textarea id="comment" maxlength="1000" placeholder="Размер, цвет, количество и другие пожелания"></textarea></label>
 <button class="btn" type="submit">ОТПРАВИТЬ ЗАЯВКУ →</button></form>
 <p class="hint">После нажатия откроется Telegram с подготовленной заявкой. Проверь сообщение и нажми «Отправить». Указанный номер телефона будет передан магазину.</p></div></section>
 </main><footer><span>© 2026 MUHACLOTHES</span><a href="https://t.me/dobrymuha" target="_blank" rel="noopener">@dobrymuha</a></footer>
@@ -39,20 +38,31 @@ const SUPABASE_KEY = "sb_publishable_7-Hl1pKMhUIFEeQHTWoEPA_IxeuVfEC";
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 let catalog = [];
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function safeProductUrl(value){
+ try{
+  const u=new URL(value);
+  return (u.protocol==="https:"||u.protocol==="http:")?u.href:"";
+ }catch{return "";}
+}
 async function loadProducts(){
- const box=document.getElementById("products"), choice=document.getElementById("productChoice");
+ const box=document.getElementById("products");
  const {data,error}=await db.from("products").select("*").order("created_at",{ascending:false});
  if(error){box.innerHTML='<p style="color:#aaa">Не удалось загрузить каталог. Попробуй обновить страницу позже.</p>';return;}
  catalog=data||[];
- if(!catalog.length){box.innerHTML='<p style="color:#888">Каталог скоро пополнится. По вопросам напиши нам в Telegram.</p>';return;}
- box.innerHTML=catalog.map(p=>`<article class="product"><div class="photo">${p.image_url?`<img src="${esc(p.image_url)}" alt="${esc(p.name)}">`:'ФОТО СКОРО ПОЯВИТСЯ'}</div><div class="info"><div class="name">${esc(p.name)}</div><div class="meta">Размеры: ${esc((p.sizes||[]).join(", ")||"уточняйте")}</div>${p.description?`<div class="meta">${esc(p.description)}</div>`:""}<div class="price">${Number(p.price).toLocaleString("ru-RU")} ₽</div><a class="orderlink" href="#order" data-id="${esc(p.id)}">ЗАКАЗАТЬ →</a></div></article>`).join("");
- choice.innerHTML='<option value="">Выбери товар</option>'+catalog.map(p=>`<option value="${esc(p.name)}">${esc(p.name)} — ${Number(p.price).toLocaleString("ru-RU")} ₽</option>`).join('')+'<option value="Другой товар">Другой товар</option>';
- box.querySelectorAll(".orderlink").forEach(a=>a.addEventListener("click",()=>{const p=catalog.find(x=>x.id===a.dataset.id);if(p)choice.value=p.name;}));
+ if(!catalog.length){box.innerHTML='<p style="color:#888">Каталог скоро пополнится. Нужную вещь с другой площадки можно заказать через форму ниже.</p>';return;}
+ box.innerHTML=catalog.map(p=>{
+  const url=safeProductUrl(p.product_url);
+  const content=`<div class="photo">${p.image_url?`<img src="${esc(p.image_url)}" alt="${esc(p.name)}">`:'ФОТО СКОРО ПОЯВИТСЯ'}</div><div class="info"><div class="name">${esc(p.name)}</div><div class="meta">Размеры: ${esc((p.sizes||[]).join(", ")||"уточняйте")}</div>${p.description?`<div class="meta">${esc(p.description)}</div>`:""}<div class="price">${Number(p.price).toLocaleString("ru-RU")} ₽</div><div class="orderlink">${url?"ПЕРЕЙТИ К ТОВАРУ ↗":"ССЫЛКА СКОРО ПОЯВИТСЯ"}</div></div>`;
+  return url?`<a class="product" href="${esc(url)}" target="_blank" rel="noopener noreferrer">${content}</a>`:`<article class="product">${content}</article>`;
+ }).join("");
 }
 document.getElementById("orderForm").addEventListener("submit",e=>{
  e.preventDefault();
- const vals={name:document.getElementById("customerName").value.trim(),phone:document.getElementById("customerPhone").value.trim(),product:document.getElementById("productChoice").value,link:document.getElementById("productLink").value.trim(),comment:document.getElementById("comment").value.trim()};
- const msg=`НОВАЯ ЗАЯВКА — MUHACLOTHES\nИмя: ${vals.name}\nТелефон: ${vals.phone}\nТовар: ${vals.product}\nСсылка: ${vals.link||"не указана"}\nКомментарий: ${vals.comment||"нет"}`;
+ const name=document.getElementById("customerName").value.trim();
+ const phone=document.getElementById("customerPhone").value.trim();
+ const link=document.getElementById("productLink").value.trim();
+ const comment=document.getElementById("comment").value.trim();
+ const msg=`ЗАКАЗ С ДРУГОЙ ПЛОЩАДКИ — MUHACLOTHES\nИмя: ${name}\nТелефон: ${phone}\nСсылка на товар: ${link}\nКомментарий: ${comment||"нет"}`;
  window.open("https://t.me/dobrymuha?text="+encodeURIComponent(msg),"_blank","noopener");
 });
 loadProducts();
