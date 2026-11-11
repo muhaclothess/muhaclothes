@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MUHACLOTHES — Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0b0b0b;color:#f5f3ef;font-family:Manrope,Arial,sans-serif}.wrap{max-width:900px;margin:0 auto;padding:35px 20px}.top{display:flex;justify-content:space-between;align-items:center;gap:15px;border-bottom:1px solid #292929;padding-bottom:20px}.logo{font-weight:800;letter-spacing:3px}h1{font-size:27px;margin:30px 0 8px}.muted{color:#999;font-size:13px}.panel{background:#151515;border:1px solid #292929;padding:22px;margin-top:22px;border-radius:8px}label{display:block;color:#aaa;font-size:12px;margin:14px 0}input,textarea{display:block;width:100%;margin-top:7px;padding:13px;background:#202020;color:white;border:1px solid #383838;font:inherit;font-size:14px;border-radius:4px}textarea{min-height:75px}button,.btn{background:#e8dfd0;color:#111;border:0;padding:13px 18px;font-weight:800;cursor:pointer;border-radius:3px;margin:8px 8px 0 0}button.secondary{background:#292929;color:#eee}button.danger{background:#572a2a;color:white}.hidden{display:none!important}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.item{display:flex;gap:15px;align-items:center;border-top:1px solid #303030;padding:15px 0}.item img{width:75px;height:85px;object-fit:cover;background:#222}.iteminfo{flex:1}.iteminfo b{display:block}.status{font-size:12px;color:#b7a58a;min-height:20px;margin-top:12px}@media(max-width:600px){.grid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}}
+</style></head><body><div class="wrap">
+<div class="top"><div class="logo">MUHACLOTHES / ADMIN</div><a href="./">← На сайт</a></div>
+<section id="loginPanel" class="panel"><h1>Вход администратора</h1><p class="muted">Войди с почтой и паролем, которые создал в Supabase.</p>
+<form id="loginForm"><label>Электронная почта<input id="email" type="email" autocomplete="username" required></label><label>Пароль<input id="password" type="password" autocomplete="current-password" required></label><button type="submit">ВОЙТИ</button></form><div id="loginStatus" class="status" role="status"></div></section>
+<section id="adminPanel" class="hidden"><h1>Управление каталогом</h1><p class="muted">Добавляй товары, меняй описание, цену, размеры и фотографии.</p>
+<div class="panel"><h2 id="formTitle">Новый товар</h2><form id="productForm">
+<input id="editId" type="hidden"><label>Название<input id="pName" maxlength="120" required placeholder="Например, Худи оверсайз"></label>
+<div class="grid"><label>Цена в рублях<input id="pPrice" type="number" min="0" step="1" required placeholder="3500"></label><label>Размеры через запятую<input id="pSizes" placeholder="S, M, L, XL"></label></div>
+<label>Описание<textarea id="pDescription" maxlength="1000" placeholder="Краткое описание"></textarea></label>
+<label>Фотография<input id="pImage" type="file" accept="image/jpeg,image/png,image/webp"></label>
+<button type="submit">СОХРАНИТЬ ТОВАР</button><button type="button" class="secondary" id="cancelEdit">ОЧИСТИТЬ</button></form><div id="productStatus" class="status" role="status"></div></div>
+<div class="panel"><h2>Товары в каталоге</h2><div id="productList" class="muted">Загрузка…</div></div>
+<button class="secondary" id="logout">ВЫЙТИ ИЗ АККАУНТА</button></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
+const SUPABASE_URL="https://ftcgwldunidvnkeirwrp.supabase.co";
+const SUPABASE_KEY="sb_publishable_7-Hl1pKMhUIFEeQHTWoEPA_IxeuVfEC";
+const ADMIN_UID="9def6b52-19d3-4993-a753-6dbd33fecf40";
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const $=id=>document.getElementById(id);
+function status(id,msg){$(id).textContent=msg;}
+async function showSession(){
+ const {data:{session}}=await db.auth.getSession();
+ const allowed=session&&session.user.id===ADMIN_UID;
+ $("loginPanel").classList.toggle("hidden",!!allowed);
+ $("adminPanel").classList.toggle("hidden",!allowed);
+ if(session&&!allowed){await db.auth.signOut();status("loginStatus","У этого аккаунта нет прав администратора.");}
+ if(allowed)loadList();
+}
+$("loginForm").addEventListener("submit",async e=>{e.preventDefault();status("loginStatus","Проверяем данные…");const {error}=await db.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});if(error){status("loginStatus","Не удалось войти. Проверь почту и пароль.");return;}await showSession();});
+async function loadList(){
+ const {data,error}=await db.from("products").select("*").order("created_at",{ascending:false});
+ if(error){$("productList").textContent="Ошибка загрузки товаров. Проверь политики доступа.";return;}
+ if(!data.length){$("productList").textContent="Пока товаров нет. Добавь первый товар выше.";return;}
+ $("productList").innerHTML=data.map(p=>`<div class="item"><img src="${p.image_url||""}" alt=""><div class="iteminfo"><b>${safe(p.name)}</b><span class="muted">${Number(p.price).toLocaleString("ru-RU")} ₽ · ${safe((p.sizes||[]).join(", "))}</span></div><button class="secondary" data-edit="${p.id}">ИЗМЕНИТЬ</button><button class="danger" data-delete="${p.id}">УДАЛИТЬ</button></div>`).join("");
+ $("productList").querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>editProduct(data.find(p=>p.id===b.dataset.edit)));
+ $("productList").querySelectorAll("[data-delete]").forEach(b=>b.onclick=()=>deleteProduct(b.dataset.delete));
+}
+function safe(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function editProduct(p){$("editId").value=p.id;$("pName").value=p.name;$("pPrice").value=p.price;$("pSizes").value=(p.sizes||[]).join(", ");$("pDescription").value=p.description||"";$("formTitle").textContent="Редактировать товар";status("productStatus","Вы редактируете: "+p.name);window.scrollTo({top:0,behavior:"smooth"});}
+$("cancelEdit").onclick=()=>{$("productForm").reset();$("editId").value="";$("formTitle").textContent="Новый товар";status("productStatus","");};
+async function uploadPhoto(file){
+ if(!file)return null;
+ if(!["image/jpeg","image/png","image/webp"].includes(file.type))throw new Error("Выбери JPG, PNG или WebP.");
+ if(file.size>5*1024*1024)throw new Error("Фото должно быть меньше 5 МБ.");
+ const ext=file.type==="image/png"?"png":file.type==="image/webp"?"webp":"jpg";
+ const path=crypto.randomUUID()+"."+ext;
+ const {error}=await db.storage.from("product-photos").upload(path,file,{upsert:false,contentType:file.type});
+ if(error)throw error;
+ const {data}=db.storage.from("product-photos").getPublicUrl(path);
+ return data.publicUrl;
+}
+$("productForm").addEventListener("submit",async e=>{
+ e.preventDefault();status("productStatus","Сохраняем…");
+ try{
+ const id=$("editId").value, file=$("pImage").files[0];
+ const old=id?(await db.from("products").select("image_url").eq("id",id).single()).data:null;
+ const image_url=file?await uploadPhoto(file):(old?.image_url||null);
+ const row={name:$("pName").value.trim(),price:Number($("pPrice").value),sizes:$("pSizes").value.split(",").map(x=>x.trim()).filter(Boolean),description:$("pDescription").value.trim(),image_url};
+ const result=id?await db.from("products").update(row).eq("id",id):await db.from("products").insert(row);
+ if(result.error)throw result.error;
+ $("productForm").reset();$("editId").value="";$("formTitle").textContent="Новый товар";status("productStatus","Товар сохранён!");await loadList();
+ }catch(err){status("productStatus","Ошибка: "+(err.message||"не удалось сохранить товар"));}
+});
+async function deleteProduct(id){if(!confirm("Точно удалить этот товар?"))return;const {error}=await db.from("products").delete().eq("id",id);if(error){status("productStatus","Не удалось удалить: "+error.message);return;}status("productStatus","Товар удалён.");loadList();}
+$("logout").onclick=async()=>{await db.auth.signOut();await showSession();};
+showSession();
+</script></body></html>
