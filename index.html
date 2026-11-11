@@ -1,206 +1,59 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MUHACLOTHES — магазин одежды</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MUHACLOTHES — одежда с характером</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
-
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:#0b0b0b;color:#f5f3ef;font-family:Manrope,Arial,sans-serif}
-a{color:inherit;text-decoration:none}
-header{height:85px;padding:0 7%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #292929}
-.logo{font-size:24px;font-weight:800;letter-spacing:3px}
-nav{display:flex;gap:30px;color:#aaa;font-size:13px}
-nav a:hover{color:white}
-.hero{min-height:570px;padding:100px 8%;display:flex;flex-direction:column;justify-content:center;background:radial-gradient(ellipse at 75% 50%,#34302a 0%,#171614 35%,#0b0b0b 75%)}
-.tag{color:#b7a58a;letter-spacing:4px;font-size:11px;text-transform:uppercase}
-.hero h1{font-size:clamp(55px,10vw,115px);line-height:.95;letter-spacing:-5px;margin:25px 0}
-.hero p{color:#aaa;max-width:430px;line-height:1.8;font-size:14px}
-.btn{display:inline-block;margin-top:35px;padding:17px 30px;background:#e8dfd0;color:#111;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;border:0;cursor:pointer}
-.btn:hover{background:white}
-section{padding:85px 8%}
-.section-title{font-size:35px;margin-bottom:12px}
-.section-sub{color:#888;font-size:13px;margin-bottom:40px}
-.products{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-.product{background:#151515;padding-bottom:25px}
-.product-image{height:330px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#272521,#111);overflow:hidden}
-.product-image img{width:100%;height:100%;object-fit:cover}
-.product-image span{font-size:13px;color:#777;letter-spacing:2px}
-.product-info{padding:22px 20px 0}
-.product-name{font-size:17px;font-weight:700}
-.product-meta{font-size:12px;color:#888;margin-top:9px}
-.price{font-size:18px;font-weight:800;margin-top:17px}
-.order-link{display:inline-block;margin-top:18px;font-size:11px;letter-spacing:1px;border-bottom:1px solid #b7a58a;padding-bottom:5px}
-.about{background:#141414;display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
-.about p{color:#aaa;font-size:14px;line-height:2}
-.sources{display:flex;flex-wrap:wrap;gap:12px;margin-top:25px}
-.sources span{border:1px solid #333;padding:10px 15px;color:#aaa;font-size:12px}
-.order{background:#111}
-.order-wrap{max-width:650px;margin:auto}
-form{display:grid;gap:16px;margin-top:35px}
-label{font-size:12px;color:#aaa}
-input,select,textarea{width:100%;padding:16px;background:#1b1b1b;border:1px solid #333;color:white;font:inherit;font-size:13px;outline:none;margin-top:8px}
-input:focus,select:focus,textarea:focus{border-color:#b7a58a}
-textarea{min-height:90px;resize:vertical}
-form .btn{width:100%;margin-top:10px}
-.note{font-size:11px;color:#777;line-height:1.7;margin-top:18px}
-footer{padding:35px 8%;border-top:1px solid #292929;display:flex;justify-content:space-between;gap:20px;color:#777;font-size:12px}
-@media(max-width:750px){
- header{padding:0 5%;height:70px}
- nav{gap:12px;font-size:11px}
- .logo{font-size:19px}
- .hero{padding:80px 6%;min-height:490px}
- section{padding:65px 6%}
- .products{grid-template-columns:1fr}
- .product-image{height:390px}
- .about{grid-template-columns:1fr}
- footer{flex-direction:column}
-}
-</style>
-</head>
+:root{--bg:#0b0b0b;--panel:#151515;--muted:#999;--cream:#e8dfd0;--line:#2a2a2a}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:#f5f3ef;font-family:Manrope,Arial,sans-serif}a{color:inherit;text-decoration:none}
+header{height:78px;padding:0 7%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);position:sticky;top:0;background:#0b0b0bf2;z-index:5}.logo{font-weight:800;letter-spacing:3px;font-size:22px}nav{display:flex;gap:26px;color:#aaa;font-size:12px}
+.hero{min-height:560px;padding:100px 8%;display:flex;flex-direction:column;justify-content:center;background:radial-gradient(ellipse at 76% 46%,#3b342b 0,#191714 34%,#0b0b0b 72%)}.eyebrow{font-size:11px;letter-spacing:4px;color:#b7a58a;text-transform:uppercase}.hero h1{font-size:clamp(58px,10vw,112px);line-height:.9;letter-spacing:-5px;margin:24px 0}.hero p{max-width:460px;color:#aaa;line-height:1.8;font-size:14px}.btn{display:inline-block;border:0;background:var(--cream);color:#111;padding:16px 25px;font-weight:800;font-size:11px;letter-spacing:1px;cursor:pointer;margin-top:24px}
+section{padding:78px 8%}.heading{font-size:34px;margin:0 0 10px}.sub{font-size:13px;color:#888;margin:0 0 35px}
+.products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}.product{background:var(--panel);padding-bottom:22px}.photo{height:340px;background:linear-gradient(145deg,#292722,#111);display:flex;align-items:center;justify-content:center;color:#777;font-size:11px;letter-spacing:2px;overflow:hidden}.photo img{width:100%;height:100%;object-fit:cover}.info{padding:20px}.name{font-weight:700;font-size:17px}.meta{font-size:12px;color:#999;margin-top:8px}.price{font-size:18px;font-weight:800;margin-top:16px}.orderlink{display:inline-block;margin-top:18px;padding-bottom:5px;border-bottom:1px solid #b7a58a;font-size:11px;letter-spacing:1px}
+.about{background:#141414;display:grid;grid-template-columns:1fr 1fr;gap:45px;align-items:center}.about p{font-size:14px;line-height:2;color:#aaa}.sources{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}.sources span{border:1px solid #333;padding:9px 13px;color:#aaa;font-size:11px}
+.order{background:#101010}.formwrap{max-width:650px;margin:auto}form{display:grid;gap:15px}label{font-size:12px;color:#aaa}input,select,textarea{width:100%;margin-top:8px;padding:15px;background:#1b1b1b;border:1px solid #333;color:#fff;font:inherit;font-size:13px}textarea{min-height:85px}form button{width:100%}.hint{font-size:11px;line-height:1.7;color:#777;margin-top:16px}
+footer{padding:30px 8%;border-top:1px solid #292929;display:flex;justify-content:space-between;color:#777;font-size:12px}
+@media(max-width:760px){header{padding:0 5%;height:68px}.logo{font-size:18px}nav{gap:12px;font-size:10px}.hero{padding:75px 6%;min-height:480px}.hero h1{letter-spacing:-3px}section{padding:60px 6%}.products{grid-template-columns:1fr}.photo{height:390px}.about{grid-template-columns:1fr}footer{padding:25px 6%;gap:15px;flex-direction:column}}
+</style></head>
 <body>
-
-<header>
- <a class="logo" href="#">MUHACLOTHES</a>
- <nav>
-  <a href="#catalog">КАТАЛОГ</a>
-  <a href="#about">О НАС</a>
-  <a href="#order">ЗАКАЗ</a>
- </nav>
-</header>
-
+<header><a class="logo" href="#">MUHACLOTHES</a><nav><a href="#catalog">КАТАЛОГ</a><a href="#about">О НАС</a><a href="#order">ЗАКАЗ</a></nav></header>
 <main>
- <section class="hero">
-  <div class="tag">YOUR STYLE. YOUR RULES.</div>
-  <h1>MUHA<br> CLOTHES.</h1>
-  <p>Одежда, которая говорит за тебя. Подбираем интересные вещи и помогаем создавать свой стиль.</p>
-  <a class="btn" href="#catalog">Смотреть каталог</a>
- </section>
-
- <section id="catalog">
-  <h2 class="section-title">Избранное</h2>
-  <p class="section-sub">Подборка вещей MUHACLOTHES</p>
-
-  <div class="products">
-   <article class="product">
-    <div class="product-image"><span>ДОБАВЬ ФОТО ХУДИ</span></div>
-    <div class="product-info">
-     <div class="product-name">Молочное худи</div>
-     <div class="product-meta">Размер: L</div>
-     <div class="price">3 000 ₽</div>
-     <a class="order-link" href="#order" onclick="selectProduct('Молочное худи')">ЗАКАЗАТЬ →</a>
-    </div>
-   </article>
-
-   <article class="product">
-    <div class="product-image"><span>ДОБАВЬ ФОТО ХУДИ</span></div>
-    <div class="product-info">
-     <div class="product-name">Песочное худи</div>
-     <div class="product-meta">Размер: M</div>
-     <div class="price">3 500 ₽</div>
-     <a class="order-link" href="#order" onclick="selectProduct('Песочное худи')">ЗАКАЗАТЬ →</a>
-    </div>
-   </article>
-
-   <article class="product">
-    <div class="product-image"><span>ДОБАВЬ ФОТО ХУДИ</span></div>
-    <div class="product-info">
-     <div class="product-name">Синее худи</div>
-     <div class="product-meta">Размеры: M, XL</div>
-     <div class="price">3 500 ₽</div>
-     <a class="order-link" href="#order" onclick="selectProduct('Синее худи')">ЗАКАЗАТЬ →</a>
-    </div>
-   </article>
-  </div>
- </section>
-
- <section class="about" id="about">
-  <div>
-   <div class="tag">ABOUT US</div>
-   <h2 class="section-title" style="margin-top:18px">Больше, чем просто одежда.</h2>
-  </div>
-  <div>
-   <p>MUHACLOTHES — магазин одежды с акцентом на стиль, детали и индивидуальность. Мы ищем интересные вещи на разных площадках и помогаем тебе найти то, что подходит именно тебе.</p>
-   <div class="sources">
-    <span>GOOFISH</span><span>POIZON</span><span>TAOBAO</span><span>1688</span><span>EBAY</span>
-   </div>
-  </div>
- </section>
-
- <section class="order" id="order">
-  <div class="order-wrap">
-   <div class="tag">MAKE AN ORDER</div>
-   <h2 class="section-title" style="margin-top:15px">Оформить заказ</h2>
-   <p class="section-sub">Заполни форму — заявка откроется в Telegram.</p>
-
-   <form id="orderForm">
-    <label>Твоё имя
-     <input id="customerName" type="text" placeholder="Как к тебе обращаться?" required>
-    </label>
-
-    <label>Номер телефона
-     <input id="customerPhone" type="tel" placeholder="+7 900 000-00-00" required>
-    </label>
-
-    <label>Товар
-     <select id="product" required>
-      <option value="">Выбери товар</option>
-      <option>Молочное худи — 3 000 ₽</option>
-      <option>Песочное худи — 3 500 ₽</option>
-      <option>Синее худи — 3 500 ₽</option>
-      <option>Другой товар</option>
-     </select>
-    </label>
-
-    <label>Ссылка на товар
-     <input id="productLink" type="url" placeholder="Вставь ссылку на товар">
-    </label>
-
-    <label>Комментарий
-     <textarea id="comment" placeholder="Размер, цвет и другие пожелания"></textarea>
-    </label>
-
-    <button class="btn" type="submit">ОТПРАВИТЬ ЗАЯВКУ →</button>
-   </form>
-
-   <p class="note">После нажатия откроется Telegram с подготовленным сообщением. Проверь его и нажми «Отправить». Номер телефона будет передан магазину вместе с заявкой.</p>
-  </div>
- </section>
-</main>
-
-<footer>
- <div>© 2026 MUHACLOTHES</div>
- <a href="https://t.me/dobrymuha" target="_blank">@dobrymuha</a>
-</footer>
-
+<section class="hero"><div class="eyebrow">YOUR STYLE. YOUR RULES.</div><h1>MUHA<br>CLOTHES.</h1><p>Одежда, которая говорит за тебя. Находи вещи с характером и создавай собственный стиль.</p><a class="btn" href="#catalog">СМОТРЕТЬ КАТАЛОГ</a></section>
+<section id="catalog"><h2 class="heading">Каталог</h2><p class="sub">Актуальные позиции MUHACLOTHES</p><div class="products" id="products"><p style="color:#888">Загружаем каталог…</p></div></section>
+<section class="about" id="about"><div><div class="eyebrow">ABOUT US</div><h2 class="heading" style="margin-top:18px">Больше, чем просто одежда.</h2></div><div><p>MUHACLOTHES — магазин одежды с акцентом на стиль, детали и индивидуальность. Мы ищем интересные вещи на разных площадках и помогаем найти то, что подходит именно тебе.</p><div class="sources"><span>GOOFISH</span><span>POIZON</span><span>TAOBAO</span><span>1688</span><span>EBAY</span></div></div></section>
+<section class="order" id="order"><div class="formwrap"><div class="eyebrow">MAKE AN ORDER</div><h2 class="heading" style="margin-top:15px">Оформить заявку</h2><p class="sub">Заполни форму — подготовим сообщение в Telegram.</p>
+<form id="orderForm">
+<label>Твоё имя<input id="customerName" required maxlength="80" placeholder="Как к тебе обращаться?"></label>
+<label>Номер телефона<input id="customerPhone" required type="tel" maxlength="30" placeholder="+7 900 000-00-00"></label>
+<label>Товар<select id="productChoice" required><option value="">Выбери товар</option></select></label>
+<label>Ссылка на товар<input id="productLink" type="url" placeholder="https://..."></label>
+<label>Комментарий<textarea id="comment" maxlength="1000" placeholder="Размер, цвет и пожелания"></textarea></label>
+<button class="btn" type="submit">ОТПРАВИТЬ ЗАЯВКУ →</button></form>
+<p class="hint">После нажатия откроется Telegram с подготовленной заявкой. Проверь сообщение и нажми «Отправить». Указанный номер телефона будет передан магазину.</p></div></section>
+</main><footer><span>© 2026 MUHACLOTHES</span><a href="https://t.me/dobrymuha" target="_blank" rel="noopener">@dobrymuha</a></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-function selectProduct(name){
- document.getElementById('product').value = name;
+const SUPABASE_URL = "https://ftcgwldunidvnkeirwrp.supabase.co";
+const SUPABASE_KEY = "sb_publishable_7-Hl1pKMhUIFEeQHTWoEPA_IxeuVfEC";
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+let catalog = [];
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+async function loadProducts(){
+ const box=document.getElementById("products"), choice=document.getElementById("productChoice");
+ const {data,error}=await db.from("products").select("*").order("created_at",{ascending:false});
+ if(error){box.innerHTML='<p style="color:#aaa">Не удалось загрузить каталог. Попробуй обновить страницу позже.</p>';return;}
+ catalog=data||[];
+ if(!catalog.length){box.innerHTML='<p style="color:#888">Каталог скоро пополнится. По вопросам напиши нам в Telegram.</p>';return;}
+ box.innerHTML=catalog.map(p=>`<article class="product"><div class="photo">${p.image_url?`<img src="${esc(p.image_url)}" alt="${esc(p.name)}">`:'ФОТО СКОРО ПОЯВИТСЯ'}</div><div class="info"><div class="name">${esc(p.name)}</div><div class="meta">Размеры: ${esc((p.sizes||[]).join(", ")||"уточняйте")}</div>${p.description?`<div class="meta">${esc(p.description)}</div>`:""}<div class="price">${Number(p.price).toLocaleString("ru-RU")} ₽</div><a class="orderlink" href="#order" data-id="${esc(p.id)}">ЗАКАЗАТЬ →</a></div></article>`).join("");
+ choice.innerHTML='<option value="">Выбери товар</option>'+catalog.map(p=>`<option value="${esc(p.name)}">${esc(p.name)} — ${Number(p.price).toLocaleString("ru-RU")} ₽</option>`).join('')+'<option value="Другой товар">Другой товар</option>';
+ box.querySelectorAll(".orderlink").forEach(a=>a.addEventListener("click",()=>{const p=catalog.find(x=>x.id===a.dataset.id);if(p)choice.value=p.name;}));
 }
-
-document.getElementById('orderForm').addEventListener('submit',function(e){
+document.getElementById("orderForm").addEventListener("submit",e=>{
  e.preventDefault();
-
- const name=document.getElementById('customerName').value.trim();
- const phone=document.getElementById('customerPhone').value.trim();
- const product=document.getElementById('product').value;
- const link=document.getElementById('productLink').value.trim();
- const comment=document.getElementById('comment').value.trim();
-
- const message=
-  'НОВЫЙ ЗАКАЗ — MUHACLOTHES%0A'+
-  'Имя: '+name+'%0A'+
-  'Телефон: '+phone+'%0A'+
-  'Товар: '+product+'%0A'+
-  'Ссылка: '+(link||'не указана')+'%0A'+
-  'Комментарий: '+(comment||'нет');
-
- window.open('https://t.me/dobrymuha?text='+encodeURIComponent(message),'_blank');
+ const vals={name:document.getElementById("customerName").value.trim(),phone:document.getElementById("customerPhone").value.trim(),product:document.getElementById("productChoice").value,link:document.getElementById("productLink").value.trim(),comment:document.getElementById("comment").value.trim()};
+ const msg=`НОВАЯ ЗАЯВКА — MUHACLOTHES\nИмя: ${vals.name}\nТелефон: ${vals.phone}\nТовар: ${vals.product}\nСсылка: ${vals.link||"не указана"}\nКомментарий: ${vals.comment||"нет"}`;
+ window.open("https://t.me/dobrymuha?text="+encodeURIComponent(msg),"_blank","noopener");
 });
-</script>
-
-</body>
-</html>
+loadProducts();
+</script></body></html>
