@@ -11,8 +11,10 @@
 <div class="panel"><h2 id="formTitle">Новый товар</h2><form id="productForm">
 <input id="editId" type="hidden"><label>Название<input id="pName" maxlength="120" required placeholder="Например, Худи оверсайз"></label>
 <div class="grid"><label>Цена в рублях<input id="pPrice" type="number" min="0" step="1" required placeholder="3500"></label><label>Размеры через запятую<input id="pSizes" placeholder="S, M, L, XL"></label></div>
+<label>Ссылка на страницу товара<input id="pUrl" type="url" required placeholder="https://..."></label>
 <label>Описание<textarea id="pDescription" maxlength="1000" placeholder="Краткое описание"></textarea></label>
 <label>Фотография<input id="pImage" type="file" accept="image/jpeg,image/png,image/webp"></label>
+<p class="muted">Ссылка нужна, чтобы покупатель при нажатии на карточку сразу переходил к товару на площадке продавца.</p>
 <button type="submit">СОХРАНИТЬ ТОВАР</button><button type="button" class="secondary" id="cancelEdit">ОЧИСТИТЬ</button></form><div id="productStatus" class="status" role="status"></div></div>
 <div class="panel"><h2>Товары в каталоге</h2><div id="productList" class="muted">Загрузка…</div></div>
 <button class="secondary" id="logout">ВЫЙТИ ИЗ АККАУНТА</button></section>
@@ -37,12 +39,12 @@ async function loadList(){
  const {data,error}=await db.from("products").select("*").order("created_at",{ascending:false});
  if(error){$("productList").textContent="Ошибка загрузки товаров. Проверь политики доступа.";return;}
  if(!data.length){$("productList").textContent="Пока товаров нет. Добавь первый товар выше.";return;}
- $("productList").innerHTML=data.map(p=>`<div class="item"><img src="${p.image_url||""}" alt=""><div class="iteminfo"><b>${safe(p.name)}</b><span class="muted">${Number(p.price).toLocaleString("ru-RU")} ₽ · ${safe((p.sizes||[]).join(", "))}</span></div><button class="secondary" data-edit="${p.id}">ИЗМЕНИТЬ</button><button class="danger" data-delete="${p.id}">УДАЛИТЬ</button></div>`).join("");
+ $("productList").innerHTML=data.map(p=>`<div class="item"><img src="${p.image_url||""}" alt=""><div class="iteminfo"><b>${safe(p.name)}</b><span class="muted">${Number(p.price).toLocaleString("ru-RU")} ₽ · ${safe((p.sizes||[]).join(", "))}</span><br><span class="muted">${safe(p.product_url||"Ссылка не указана")}</span></div><button class="secondary" data-edit="${p.id}">ИЗМЕНИТЬ</button><button class="danger" data-delete="${p.id}">УДАЛИТЬ</button></div>`).join("");
  $("productList").querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>editProduct(data.find(p=>p.id===b.dataset.edit)));
  $("productList").querySelectorAll("[data-delete]").forEach(b=>b.onclick=()=>deleteProduct(b.dataset.delete));
 }
 function safe(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
-function editProduct(p){$("editId").value=p.id;$("pName").value=p.name;$("pPrice").value=p.price;$("pSizes").value=(p.sizes||[]).join(", ");$("pDescription").value=p.description||"";$("formTitle").textContent="Редактировать товар";status("productStatus","Вы редактируете: "+p.name);window.scrollTo({top:0,behavior:"smooth"});}
+function editProduct(p){$("editId").value=p.id;$("pName").value=p.name;$("pPrice").value=p.price;$("pSizes").value=(p.sizes||[]).join(", ");$("pDescription").value=p.description||"";$("pUrl").value=p.product_url||"";$("formTitle").textContent="Редактировать товар";status("productStatus","Вы редактируете: "+p.name);window.scrollTo({top:0,behavior:"smooth"});}
 $("cancelEdit").onclick=()=>{$("productForm").reset();$("editId").value="";$("formTitle").textContent="Новый товар";status("productStatus","");};
 async function uploadPhoto(file){
  if(!file)return null;
@@ -61,7 +63,7 @@ $("productForm").addEventListener("submit",async e=>{
  const id=$("editId").value, file=$("pImage").files[0];
  const old=id?(await db.from("products").select("image_url").eq("id",id).single()).data:null;
  const image_url=file?await uploadPhoto(file):(old?.image_url||null);
- const row={name:$("pName").value.trim(),price:Number($("pPrice").value),sizes:$("pSizes").value.split(",").map(x=>x.trim()).filter(Boolean),description:$("pDescription").value.trim(),image_url};
+ const row={name:$("pName").value.trim(),price:Number($("pPrice").value),sizes:$("pSizes").value.split(",").map(x=>x.trim()).filter(Boolean),description:$("pDescription").value.trim(),product_url:$("pUrl").value.trim(),image_url};
  const result=id?await db.from("products").update(row).eq("id",id):await db.from("products").insert(row);
  if(result.error)throw result.error;
  $("productForm").reset();$("editId").value="";$("formTitle").textContent="Новый товар";status("productStatus","Товар сохранён!");await loadList();
