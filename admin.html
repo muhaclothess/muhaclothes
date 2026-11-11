@@ -11,10 +11,10 @@
 <div class="panel"><h2 id="formTitle">Новый товар</h2><form id="productForm">
 <input id="editId" type="hidden"><label>Название<input id="pName" maxlength="120" required placeholder="Например, Худи оверсайз"></label>
 <div class="grid"><label>Цена в рублях<input id="pPrice" type="number" min="0" step="1" required placeholder="3500"></label><label>Размеры через запятую<input id="pSizes" placeholder="S, M, L, XL"></label></div>
-<label>Ссылка на страницу товара<input id="pUrl" type="url" required placeholder="https://..."></label>
+<label>Ссылка на страницу товара (необязательно)<input id="pUrl" type="url" placeholder="Можно оставить пустым"></label>
 <label>Описание<textarea id="pDescription" maxlength="1000" placeholder="Краткое описание"></textarea></label>
 <label>Фотография<input id="pImage" type="file" accept="image/jpeg,image/png,image/webp"></label>
-<p class="muted">Ссылка нужна, чтобы покупатель при нажатии на карточку сразу переходил к товару на площадке продавца.</p>
+<p class="muted">Ссылку можно не указывать. Покупатель нажмёт на товар в каталоге и перейдёт в Telegram для заказа. Это поле можно заполнить только для сохранения ссылки на площадку поставщика.</p>
 <button type="submit">СОХРАНИТЬ ТОВАР</button><button type="button" class="secondary" id="cancelEdit">ОЧИСТИТЬ</button></form><div id="productStatus" class="status" role="status"></div></div>
 <div class="panel"><h2>Товары в каталоге</h2><div id="productList" class="muted">Загрузка…</div></div>
 <button class="secondary" id="logout">ВЫЙТИ ИЗ АККАУНТА</button></section>
