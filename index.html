@@ -51,9 +51,10 @@ async function loadProducts(){
  catalog=data||[];
  if(!catalog.length){box.innerHTML='<p style="color:#888">Каталог скоро пополнится. Нужную вещь с другой площадки можно заказать через форму ниже.</p>';return;}
  box.innerHTML=catalog.map(p=>{
-  const url=safeProductUrl(p.product_url);
-  const content=`<div class="photo">${p.image_url?`<img src="${esc(p.image_url)}" alt="${esc(p.name)}">`:'ФОТО СКОРО ПОЯВИТСЯ'}</div><div class="info"><div class="name">${esc(p.name)}</div><div class="meta">Размеры: ${esc((p.sizes||[]).join(", ")||"уточняйте")}</div>${p.description?`<div class="meta">${esc(p.description)}</div>`:""}<div class="price">${Number(p.price).toLocaleString("ru-RU")} ₽</div><div class="orderlink">${url?"ПЕРЕЙТИ К ТОВАРУ ↗":"ССЫЛКА СКОРО ПОЯВИТСЯ"}</div></div>`;
-  return url?`<a class="product" href="${esc(url)}" target="_blank" rel="noopener noreferrer">${content}</a>`:`<article class="product">${content}</article>`;
+  const message=`Здравствуйте! Хочу заказать товар: ${p.name}. Цена: ${Number(p.price).toLocaleString("ru-RU")} ₽. Размеры: ${(p.sizes||[]).join(", ")||"уточню"}.`;
+  const telegramUrl="https://t.me/dobrymuha?text="+encodeURIComponent(message);
+  const content=`<div class="photo">${p.image_url?`<img src="${esc(p.image_url)}" alt="${esc(p.name)}">`:'ФОТО СКОРО ПОЯВИТСЯ'}</div><div class="info"><div class="name">${esc(p.name)}</div><div class="meta">Размеры: ${esc((p.sizes||[]).join(", ")||"уточняйте")}</div>${p.description?`<div class="meta">${esc(p.description)}</div>`:""}<div class="price">${Number(p.price).toLocaleString("ru-RU")} ₽</div><div class="orderlink">ЗАКАЗАТЬ В TELEGRAM →</div></div>`;
+  return `<a class="product" href="${esc(telegramUrl)}" target="_blank" rel="noopener noreferrer">${content}</a>`;
  }).join("");
 }
 document.getElementById("orderForm").addEventListener("submit",e=>{
